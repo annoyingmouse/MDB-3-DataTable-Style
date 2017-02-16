@@ -65,10 +65,22 @@
         "language": {
             "lengthMenu": "_MENU_",
             "paginate": {
-                "first": '<i class="material-icons">first_page</i>',
-                "last": '<i class="material-icons">last_page</i>',
-                "next": '<i class="material-icons">chevron_right</i>',
-                "previous": '<i class="material-icons">chevron_left</i>'
+                "first": `
+                    <i class="material-icons">
+                        first_page
+                    </i>`,
+                "last": `
+                    <i class="material-icons">
+                        last_page
+                    </i>`,
+                "next": `
+                    <i class="material-icons">
+                        chevron_right
+                    </i>`,
+                "previous": `
+                    <i class="material-icons">
+                        chevron_left
+                    </i>`
             }
         },
         "initComplete": () => {
@@ -76,19 +88,42 @@
              * This makes the length dropdown into a material select
              */
             let lengthDiv = $(".dataTables_length"),
-                lengthSelect = lengthDiv.find("select[name$='_length']"),
-                lengthSelectClone = lengthSelect.clone(true);
-            lengthDiv.replaceWith(lengthSelectClone);
-            lengthSelectClone.material_select();
+                lengthSelect = lengthDiv
+                    .find("select[name$='_length']"),
+                lengthSelectClone = lengthSelect
+                    .clone(true);
+            lengthDiv
+                .replaceWith(lengthSelectClone);
+            lengthSelectClone
+                .material_select();
+            let lengthSelectCloneCaret = lengthSelectClone
+                .parent()
+                .find(".caret");
+            lengthSelectCloneCaret
+                .css("display", "block")
+                .css("width", "initial")
+                .css("border-top", "initial");
+
             /*
              * This makes the filter input work as a material input
              */
             let filterDiv = $(".dataTables_filter"),
-                filterDivParent = filterDiv.parent(".input-field"),
-                filterInput = filterDiv.find("input[type='search']"),
-                filterInputClone = filterInput.clone(true),
-                tableId = filterDiv.closest(".dataTables_wrapper").attr("id").split("_")[0],
-                filterLabel = filterInput.parent("label").attr("for", tableId + "_cloned_input").empty().text("Search").clone(true);
+                filterDivParent = filterDiv
+                    .parent(".input-field"),
+                filterInput = filterDiv
+                    .find("input[type='search']"),
+                filterInputClone = filterInput
+                    .clone(true),
+                tableId = filterDiv
+                    .closest(".dataTables_wrapper")
+                    .attr("id")
+                    .split("_")[0],
+                filterLabel = filterInput
+                    .parent("label")
+                    .attr("for", tableId + "_cloned_input")
+                    .empty()
+                    .text("Search")
+                    .clone(true);
             filterInputClone.attr({
                 "id": tableId + "_cloned_input",
                 "type": "text"
@@ -101,7 +136,14 @@
                     filterLabel.removeClass("active");
                 }
             });
-            filterDivParent.empty().append(filterInputClone).append(filterLabel)
+            filterDivParent
+                .empty()
+                .append(`
+                    <i class="material-icons prefix">
+                        search
+                    </i>`)
+                .append(filterInputClone)
+                .append(filterLabel)
         }
     });
     /* Default class modification */
